@@ -10,7 +10,7 @@ function validateEmail (email) {
 }
 
 function validatePassword (password) {
-   if (/^[a-zA-Z0-9]{4,100}$/.test(password)) {
+   if (/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,10}$/.test(password)) {
     return { type: alertConstants.CLEARPASSWORD }
    }
    else {

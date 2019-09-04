@@ -4,23 +4,13 @@ import { Route, Switch } from 'react-router'
 import { LoginPage, DashBoardPage } from './views/pages'
 import { history } from '../src/views/history'
 
-function isAuth(nextState, replace) {
-  console.log('App', this)
-  if (this.props.isLoginSuccess) {
-    replace({
-      pathname: '/login',
-      state: { nextPathname: nextState.location.pathname }
-    })
-  }
-}
-
 function App() {
   return (
     <Router history={history}>
       <Switch>
-        <Route key={'login'} path="/" component={LoginPage}  exact strict/>
-        <Route key={'home'} path="/login" component={LoginPage} exact strict/>
-        <Route key={'dashboard'} path="/dashboard" component={DashBoardPage} onEnter={isAuth}  />
+        <Route key={'home'} path="/" component={LoginPage}  exact strict/>
+        <Route key={'login'} path="/login" component={LoginPage} exact strict/>
+        <Route key={'dashboard'} path="/dashboard" component={DashBoardPage} />
       </Switch>
     </Router>
   )

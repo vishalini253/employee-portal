@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import { userActions, validateActions } from '../../_actions'
 import { errorMessages } from '../../../static'
+import './style.css'
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -36,8 +37,6 @@ class LoginPage extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-
-        this.setState({ submitted: true });
         const { username, password } = this.state;
         if (username && password) {
             this.props.login(username, password);
@@ -45,28 +44,31 @@ class LoginPage extends React.Component {
     }
 
     render() {
-        const { username, password, submitted } = this.state;
+        const { username, password } = this.state;
         const { isLoginSuccess, isValidEmail=true, isValidPassword=true } = this.props
         return (
-            <div className="col-md-6 col-md-offset-3">
-                <h2>Login</h2>
+            <div className="login-page-container">
+                <h2 className="login-title">Login</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
+                    <div className={'form-group'}>
                         <label htmlFor="username">Username*</label>
                         <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} onBlur={this.handleEmailBlur} />
                         {!isValidEmail &&
                             <div className="help-block">{errorMessages.email}</div>
                         }
                     </div>
-                    <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
+                    <div className={'form-group'}>
                         <label htmlFor="password">Password*</label>
                         <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} onBlur={this.handlePasswordBlur} />
                         {!isValidPassword &&
                             <div className="help-block">{errorMessages.password}</div>
                         }
                     </div>
-                    <button className="btn btn-primary">Login</button>
-                    {!isLoginSuccess && <span> {errorMessages.invalidCredential} </span>}
+                    <div className={'form-group'}>
+                        <label > </label>
+                        <button className="btn btn-primary">Login</button>
+                    </div>
+                    {!isLoginSuccess && <span className="error-message"> {errorMessages.invalidCredential} </span>}
                 </form>
             </div>
         );

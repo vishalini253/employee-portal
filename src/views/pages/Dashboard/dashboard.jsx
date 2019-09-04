@@ -1,12 +1,22 @@
 import React from 'react'
+import { history } from '../../history'
+import './style.css'
 
 class DashBoardPage extends React.Component {
+    componentDidMount = () => {
+        const { state } = this.props.location
+        const user= state && state.dashBoardData.user ? state.dashBoardData.user : []
+        if (!user.length) {
+            history.push({pathname: '/login'})
+        }
+    }
+
     renderDashBoardView = () => {
         const { state } = this.props.location
-        const { user } = state.dashBoardData
+        const user = state && state.dashBoardData.user ? state.dashBoardData.user : []
         const dataTable = user && user.length && user.map(employee => {
             return (
-                <tr>
+                <tr className="table-entries">
                     <td>{employee.id}</td>
                     <td>{employee.name}</td>
                     <td>{employee.age}</td>
@@ -17,8 +27,8 @@ class DashBoardPage extends React.Component {
             )
         })
         const dashBoardView = (
-            <table border = "1">
-                <tr>
+            <table className="table-wrapper">
+                <tr className="table-heading">
                     <th>ID</th>
                     <th>Name</th>
                     <th>Age</th>
@@ -34,13 +44,14 @@ class DashBoardPage extends React.Component {
 
     render() {
         const { state } = this.props.location
-        const { user } = state.dashBoardData
-        const dashBoardView = user && user.length ? this.renderDashBoardView() : ''
+        const user = state && state.dashBoardData.user ? state.dashBoardData.user : []
+        const dashBoardView = user && user.length ? this.renderDashBoardView() : 'No Employee details found'
         return (
-            <div className="col-md-6 col-md-offset-3">
+            <div className="dashboard-page-container">
+                <h2 className="dashboard-title"> Dash Board Page </h2>
                 {dashBoardView}
             </div>
-        );
+        )
     }
 }
 
